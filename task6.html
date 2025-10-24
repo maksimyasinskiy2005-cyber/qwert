@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 6 — Робота з масивами</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 40px;
+    }
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 420px;
+    }
+    input {
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-right: 10px;
+      background-color: #2b7cff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #195ccc;
+    }
+    #output {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+    .field {
+      background: #f0f0f0;
+      padding: 8px;
+      border-radius: 6px;
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Склад — інформація про товари</h2>
+
+    <label>Введіть назву товару:</label>
+    <input type="text" id="product" placeholder="Наприклад: Дриль">
+
+    <button onclick="fun1()">Наявна кількість і вартість</button>
+    <button onclick="fun2()">Загальна сума</button>
+
+    <div id="output">
+      <div id="quantity" class="field"></div>
+      <div id="price" class="field"></div>
+      <div id="total" class="field"></div>
+    </div>
+  </div>
+
+  <script>
+    // 🔹 Масиви
+    const names = ["Дриль", "Дошка", "Диски", "Датчик", "Диван"];
+    const quantity = [5, 12, 20, 8, 2];
+    const price = [2500, 300, 150, 800, 9500];
+
+    // 🔹 Глобальна змінна для індексу знайденого товару
+    let index = -1;
+
+    // Функція 1 — виводить кількість і ціну
+    function fun1() {
+      const inputName = document.getElementById("product").value.trim();
+      index = names.findIndex(item => item.toLowerCase() === inputName.toLowerCase());
+
+      const qField = document.getElementById("quantity");
+      const pField = document.getElementById("price");
+      const tField = document.getElementById("total");
+      tField.textContent = ""; // очищаємо попередній результат
+
+      if (index === -1) {
+        qField.textContent = "Товар не знайдено!";
+        pField.textContent = "";
+      } else {
+        qField.textContent = `Наявна кількість: ${quantity[index]} шт.`;
+        pField.textContent = `Ціна за одиницю: ${price[index]} грн.`;
+      }
+    }
+
+    // Функція 2 — обчислює загальну суму
+    function fun2() {
+      const tField = document.getElementById("total");
+
+      if (index === -1) {
+        tField.textContent = "Спочатку знайдіть товар!";
+      } else {
+        const total = quantity[index] * price[index];
+        tField.textContent = `Загальна вартість товару "${names[index]}" = ${total} грн.`;
+      }
+    }
+  </script>
+</body>
+</html>

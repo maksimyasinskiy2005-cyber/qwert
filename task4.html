@@ -1,75 +1,80 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <title>Лабораторна 2, Завдання 4: Дослідження console.log()</title>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота — Завдання 4</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #692727;
+    }
+    .container {
+      background: rgb(255, 255, 255);
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 400px;
+    }
+    input {
+      width: 100%;
+      margin: 10px 0;
+      padding: 8px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #2b7cff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #195ccc;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Обчислення функції F</h2>
+    <label>Введіть x:</label>
+    <input type="number" id="x" step="any" placeholder="Введіть x">
 
-    <h1>Лабораторна 2, Завдання 4: console.log()</h1>
-    <p>Відкрийте консоль браузера (F12), щоб побачити результати виконання JavaScript-коду.</p>
+    <label>Введіть y:</label>
+    <input type="number" id="y" step="any" placeholder="Введіть y">
 
-    <script>
-        // === Наперед задані дані ===
-        let numA = 17;
-        let numB = 5;
-        let dataArray = [42, "Привіт JS", 3.14159];
-        
-        console.log("--- ПОЧАТОК ВИКОНАННЯ ЗАВДАННЯ 4 ---");
+    <button onclick="calculate()">Обчислити</button>
 
-        // ------------------------------------------------------------------
-        // ВИПАДОК 1: Вивід остачі від ділення одного числа на інше
-        // ------------------------------------------------------------------
-        
-        console.log("\n--- ВИПАДОК 1: Остача від ділення ---");
-        
-        // Використовуємо оператор модуля (%)
-        let remainder = numA % numB; 
-        
-        console.log(`Операція: ${numA} % ${numB}`);
-        console.log("Остача від ділення:", remainder);
-        console.log("Альтернативний вивід: Остача = " + (numA % numB));
+    <p id="result"></p>
+  </div>
 
+  <script>
+    function calculate() {
+      let x = parseFloat(document.getElementById('x').value);
+      let y = parseFloat(document.getElementById('y').value);
+      let F;
 
-        // ------------------------------------------------------------------
-        // ВИПАДОК 2: Вивід логічного значення (true/false) перевірки рівності нулю остачі
-        // ------------------------------------------------------------------
-        
-        console.log("\n--- ВИПАДОК 2: Перевірка рівності нулю остачі ---");
-        
-        // Перевірка: чи є numA кратним numB? (чи дорівнює остача нулю?)
-        let isDivisible = (numA % numB) === 0;
-        
-        console.log(`Перевірка: (${numA} % ${numB}) === 0`);
-        console.log("Результат перевірки (логічне значення):", isDivisible);
-        
-        // Додаткова перевірка (наприклад, перевірка парності)
-        let numC = 24;
-        let isEven = (numC % 2) === 0;
-        console.log(`\nДодатково: Перевірка парності числа ${numC}:`, isEven);
+      if (isNaN(x) || isNaN(y)) {
+        document.getElementById('result').textContent = "Будь ласка, введіть обидва значення!";
+        return;
+      }
 
+      if (x !== y) {
+        F = 10 * x + y;
+      } else if (y ** 2 !== 2 * x * y || y < 0) {
+        F = 2 * x * y + 4 * x / y;
+      } else {
+        F = x + y ** 2;
+      }
 
-        // ------------------------------------------------------------------
-        // ВИПАДОК 3: Комбінований вивід тексту і значень масиву (%d, %s)
-        // ------------------------------------------------------------------
-        
-        console.log("\n--- ВИПАДОК 3: Вивід з керуючими послідовностями %d та %s ---");
-        
-        // %d (decimal/integer) - для цілих чисел
-        // %s (string) - для рядків
-        
-        console.log(
-            "Масив містить: число (%d), рядок (%s) та число з плаваючою точкою (%s або %d).", 
-            dataArray[0],        // 42 (виводиться як число %d)
-            dataArray[1],        // "Привіт JS" (виводиться як рядок %s)
-            dataArray[2],        // 3.14159 (виводиться як рядок %s)
-            dataArray[2]         // 3.14159 (виводиться як число %d, але може бути округлене або виведене з плаваючою точкою)
-        );
-
-        console.log("\nКонтрольний приклад (вивід без %):", dataArray);
-        
-        console.log("--- КІНЕЦЬ ВИКОНАННЯ ЗАВДАННЯ 4 ---");
-        
-    </script>
+      document.getElementById('result').textContent = `Результат F = ${F.toFixed(3)}`;
+    }
+  </script>
 </body>
 </html>
