@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна робота — Завдання 4 💡</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #111);
+      color: #00ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Контейнер */
+    .container {
+      background: rgba(20, 20, 20, 0.8);
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 30px #00ffff, inset 0 0 25px rgba(0, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
+      text-align: center;
+      animation: boxGlow 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes boxGlow {
+      from { box-shadow: 0 0 20px #00e0ff, inset 0 0 20px #00e0ff; }
+      to { box-shadow: 0 0 35px #00ffff, inset 0 0 40px #00ffff; }
+    }
+
+    h2 {
+      color: #00ffff;
+      text-shadow: 0 0 15px #00ffff, 0 0 40px #00e0ff;
+      margin-bottom: 25px;
+      font-size: 1.8em;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 15px 0 5px;
+      color: #a0ffff;
+      font-size: 1.1em;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 1em;
+      border: 2px solid #00ffff;
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #00ffff;
+      outline: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+    }
+
+    input[type="number"]:focus {
+      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      transform: scale(1.05);
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1em;
+      color: #0a0a0a;
+      background: #00ffff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    button:hover {
+      background: #0a0a0a;
+      color: #00ffff;
+      box-shadow: 0 0 30px #00ffff, 0 0 50px #00ffff;
+      transform: scale(1.1);
+    }
+
+    #result {
+      margin-top: 25px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #00ffff;
+      text-shadow: 0 0 10px #00ffff, 0 0 25px #00ffff;
+      transition: all 0.5s ease;
+      opacity: 0;
+    }
+
+    /* Анімація появи результату */
+    #result.show {
+      opacity: 1;
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>💠 Обчислення функції F 💠</h2>
+
+    <label>Введіть x:</label>
+    <input type="number" id="x" step="any" placeholder="Введіть x">
+
+    <label>Введіть y:</label>
+    <input type="number" id="y" step="any" placeholder="Введіть y">
+
+    <button onclick="calculate()">Обчислити</button>
+
+    <p id="result"></p>
+  </div>
+
+  <script>
+    function calculate() {
+      let x = parseFloat(document.getElementById('x').value);
+      let y = parseFloat(document.getElementById('y').value);
+      const resultElem = document.getElementById('result');
+      let F;
+
+      if (isNaN(x) || isNaN(y)) {
+        resultElem.textContent = "⚠️ Введіть обидва значення!";
+        resultElem.classList.add('show');
+        resultElem.style.color = "#ff8080";
+        return;
+      }
+
+      if (x !== y) {
+        F = 10 * x + y;
+      } else if (y ** 2 !== 2 * x * y || y < 0) {
+        F = 2 * x * y + 4 * x / y;
+      } else {
+        F = x + y ** 2;
+      }
+
+      resultElem.textContent = `✅ Результат F = ${F.toFixed(3)}`;
+      resultElem.classList.add('show');
+      resultElem.style.color = "#00ffff";
+    }
+  </script>
+</body>
+</html>

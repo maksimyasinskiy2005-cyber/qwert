@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Лабораторна 1</title>
+  <style>
+    /* Загальні стилі сторінки */
+    body {
+      background-color: #050505;
+      color: #fff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    /* Контейнер з неоновими рамками */
+    .neon-box {
+      position: relative;
+      padding: 40px 60px;
+      border-radius: 15px;
+      text-align: center;
+      background: rgba(15, 15, 15, 0.9);
+      box-shadow: 0 0 25px rgba(0, 255, 255, 0.3);
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Анімована рамка навколо */
+    .neon-box::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 15px;
+      background: linear-gradient(270deg, 
+        #0ff, #9d00ff, #ff0080, #007bff, #0ff);
+      background-size: 600% 600%;
+      animation: neonMove 8s linear infinite;
+      z-index: -1;
+      filter: blur(3px);
+    }
+
+    /* Ефект руху кольорів */
+    @keyframes neonMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Заголовок */
+    h1 {
+      color: #0ff;
+      text-shadow: 0 0 10px #0ff, 0 0 30px #0ff;
+      margin-bottom: 20px;
+    }
+
+    /* Список завдань */
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin: 12px 0;
+    }
+
+    /* Посилання */
+    a {
+      color: #0ff;
+      text-decoration: none;
+      font-size: 1.2em;
+      text-shadow: 0 0 5px #0ff, 0 0 15px #0ff;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      color: #fff;
+      text-shadow: 0 0 20px #0ff, 0 0 40px #0ff;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="neon-box">
+    <h1>Лабораторна 1</h1>
+    <ul>
+      <li><a href="task1.html">Завдання 1</a></li>
+      <li><a href="task2.html">Завдання 2</a></li>
+      <li><a href="task3.html">Завдання 3</a></li>
+      <li><a href="task4.html">Завдання 4</a></li>
+      <li><a href="task5.html">Завдання 5</a></li>
+      <li><a href="task6.html">Завдання 6</a></li>
+      <li><a href="task7.html">Завдання 7</a></li> 
+    </ul>
+  </div>
+</body>
+</html>
