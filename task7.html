@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Завдання 7 — Вибір товару 💎</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: radial-gradient(circle at top, #0a0a0a, #111);
+      color: #00ffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: rgba(15, 15, 15, 0.85);
+      padding: 40px 50px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px #00ffff, inset 0 0 15px rgba(0, 255, 255, 0.3);
+      text-align: center;
+      width: 450px;
+      animation: glowPulse 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { box-shadow: 0 0 20px #00ffff, inset 0 0 10px #00e0ff; }
+      to { box-shadow: 0 0 40px #00ffff, inset 0 0 30px #00ffff; }
+    }
+
+    h2 {
+      text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
+      margin-bottom: 30px;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 2px solid #00ffff;
+      background: rgba(0,0,0,0.6);
+      color: #00ffff;
+      outline: none;
+      box-shadow: 0 0 10px rgba(0,255,255,0.4);
+      transition: all 0.3s ease;
+    }
+
+    select:focus {
+      box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
+      transform: scale(1.05);
+    }
+
+    button {
+      background: #00ffff;
+      color: #0a0a0a;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 15px #00ffff;
+    }
+
+    button:hover {
+      background: #0a0a0a;
+      color: #00ffff;
+      box-shadow: 0 0 35px #00ffff, 0 0 60px #00ffff;
+      transform: scale(1.08);
+    }
+
+    .field {
+      background: rgba(0,255,255,0.1);
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      color: #00ffff;
+      text-shadow: 0 0 5px #00ffff;
+      transition: all 0.3s ease;
+    }
+
+    .field.show {
+      animation: fieldGlow 0.8s ease forwards;
+    }
+
+    @keyframes fieldGlow {
+      0% { box-shadow: 0 0 0 #00ffff; }
+      50% { box-shadow: 0 0 20px #00ffff; }
+      100% { box-shadow: 0 0 10px #00ffff; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>💎 Склад — вибір товару 💎</h2>
+
+    <label for="product">Оберіть товар:</label>
+    <select id="product">
+      <option value="">-- Виберіть товар --</option>
+      <option value="0">Дриль</option>
+      <option value="1">Дошка</option>
+      <option value="2">Диски</option>
+      <option value="3">Датчик</option>
+      <option value="4">Диван</option>
+    </select>
+
+    <button onclick="fun1()">Наявна кількість і вартість</button>
+    <button onclick="fun2()">Загальна сума</button>
+
+    <div id="output">
+      <div id="quantity" class="field"></div>
+      <div id="price" class="field"></div>
+      <div id="total" class="field"></div>
+    </div>
+  </div>
+
+  <script>
+    const names = ["Дриль", "Дошка", "Диски", "Датчик", "Диван"];
+    const quantity = [5, 12, 20, 8, 2];
+    const price = [2500, 300, 150, 800, 9500];
+
+    let index = -1;
+
+    function fun1() {
+      const select = document.getElementById("product");
+      index = select.value;
+
+      const qField = document.getElementById("quantity");
+      const pField = document.getElementById("price");
+      const tField = document.getElementById("total");
+      tField.textContent = "";
+      qField.classList.remove('show');
+      pField.classList.remove('show');
+
+      if (index === "") {
+        qField.textContent = "Оберіть товар зі списку!";
+        pField.textContent = "";
+      } else {
+        qField.textContent = `Наявна кількість: ${quantity[index]} шт.`;
+        pField.textContent = `Ціна за одиницю: ${price[index]} грн.`;
+      }
+
+      qField.classList.add('show');
+      pField.classList.add('show');
+    }
+
+    function fun2() {
+      const tField = document.getElementById("total");
+      tField.classList.remove('show');
+
+      if (index === "" || index === -1) {
+        tField.textContent = "Спочатку оберіть товар!";
+      } else {
+        const total = quantity[index] * price[index];
+        tField.textContent = `Загальна вартість товару "${names[index]}" = ${total} грн.`;
+      }
+
+      tField.classList.add('show');
+    }
+  </script>
+</body>
+</html>
