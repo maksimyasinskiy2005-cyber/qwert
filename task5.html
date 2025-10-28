@@ -1,153 +1,120 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>Завдання 5 — Обчислення суми ряду 💫</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: radial-gradient(circle at top, #0a0a0a, #111);
-      color: #00ffff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-
-    .container {
-      background: rgba(15, 15, 15, 0.85);
-      padding: 40px 50px;
-      border-radius: 20px;
-      box-shadow: 0 0 25px #00ffff, inset 0 0 25px rgba(0, 255, 255, 0.3);
-      backdrop-filter: blur(8px);
-      text-align: center;
-      width: 400px;
-      animation: glowPulse 5s ease-in-out infinite alternate;
-    }
-
-    @keyframes glowPulse {
-      from { box-shadow: 0 0 20px #00ffff, inset 0 0 10px #00e0ff; }
-      to { box-shadow: 0 0 40px #00ffff, inset 0 0 30px #00ffff; }
-    }
-
-    h2 {
-      color: #00ffff;
-      text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-      margin-bottom: 25px;
-      letter-spacing: 1px;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin: 15px 0 5px;
-      color: #a0ffff;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      font-size: 1em;
-      border: 2px solid #00ffff;
-      border-radius: 8px;
-      background: rgba(0, 0, 0, 0.6);
-      color: #00ffff;
-      outline: none;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
-    }
-
-    input:focus {
-      box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
-      transform: scale(1.05);
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 12px 25px;
-      background: #00ffff;
-      color: #0a0a0a;
-      font-weight: bold;
-      font-size: 1em;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      letter-spacing: 1px;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 15px #00ffff;
-    }
-
-    button:hover {
-      background: #0a0a0a;
-      color: #00ffff;
-      box-shadow: 0 0 35px #00ffff, 0 0 60px #00ffff;
-      transform: scale(1.08);
-    }
-
-    #result {
-      margin-top: 25px;
-      font-size: 1.2em;
-      font-weight: bold;
-      color: #00ffff;
-      text-shadow: 0 0 15px #00ffff, 0 0 30px #00ffff;
-      opacity: 0;
-      transition: all 0.5s ease;
-    }
-
-    #result.show {
-      opacity: 1;
-      transform: scale(1.05);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Лабораторна 2, Завдання 5: Розширені методи console</title>
 </head>
 <body>
-  <div class="container">
-    <h2>💠 Обчислення суми ряду 💠</h2>
 
-    <label>Введіть x:</label>
-    <input type="number" id="x" step="any" placeholder="Введіть x">
+    <h1>Лабораторна 2, Завдання 5: Розширені методи console</h1>
+    <p>Відкрийте консоль браузера (F12), щоб побачити різні типи виводу та результати профілювання.</p>
 
-    <label>Введіть y:</label>
-    <input type="number" id="y" step="any" placeholder="Введіть y">
+    <div id="targetElement">
+        <p class="data-p">Дані для дослідження DOM</p>
+        <ul>
+            <li>Елемент 1</li>
+            <li>Елемент 2</li>
+        </ul>
+    </div>
 
-    <button onclick="calculate()">Обчислити суму</button>
+    <script>
+        console.log("--- ПОЧАТОК ВИКОНАННЯ ЗАВДАННЯ 5 ---");
+        
+        const testObject = {
+            id: 101,
+            name: "Test User",
+            active: true,
+            details: { role: "Dev", access: ["read", "write"] }
+        };
+        const testCondition = (5 > 10);
+        
+        // ------------------------------------------------------------------
+        // 1. console.info(), console.warn(), console.error()
+        // ------------------------------------------------------------------
+        console.log("\n--- 1. Рівні повідомлень ---");
 
-    <p id="result"></p>
-  </div>
+        // console.info(): Зазвичай виводить інформаційне повідомлення (часто зі значком 'i').
+        console.info("INFO: Це інформаційне повідомлення.");
 
-  <script>
-    // Функція факторіалу
-    function factorial(n) {
-      let result = 1;
-      for (let i = 2; i <= n; i++) result *= i;
-      return result;
-    }
+        // console.warn(): Виводить попередження (жовтий фон/текст, значок попередження).
+        console.warn("WARN: Це важливе попередження, яке слід перевірити.");
 
-    // Основне обчислення
-    function calculate() {
-      let x = parseFloat(document.getElementById('x').value);
-      let y = parseFloat(document.getElementById('y').value);
-      const resultElem = document.getElementById('result');
+        // console.error(): Виводить повідомлення про помилку (червоний фон/текст, значок помилки), включає трасування стеку.
+        console.error("ERROR: Виникла критична помилка.");
 
-      if (isNaN(x) || isNaN(y)) {
-        resultElem.textContent = "⚠️ Введіть обидва значення!";
-        resultElem.style.color = "#ff8080";
-        resultElem.classList.add('show');
-        return;
-      }
+        // ------------------------------------------------------------------
+        // 2. console.dir(), console.dirxml()
+        // ------------------------------------------------------------------
+        console.log("\n--- 2. Відображення об'єктів ---");
 
-      let S = 0;
-      for (let i = 2; i <= 7; i++) {
-        let term = Math.pow(-1, i + 1) * (0.85 * i + (x * y) / (1 + x ** 2)) / factorial(i);
-        S += term;
-      }
+        // console.dir(): Виводить інтерактивний список властивостей заданого JavaScript-об'єкта. 
+        // Дозволяє досліджувати внутрішню структуру об'єктів.
+        console.log("Вивід console.dir() для JavaScript-об'єкта:");
+        console.dir(testObject);
 
-      resultElem.textContent = `✅ Сума ряду S = ${S.toFixed(6)}`;
-      resultElem.style.color = "#00ffff";
-      resultElem.classList.add('show');
-    }
-  </script>
+        // console.dirxml(): Виводить інтерактивне представлення DOM-елемента у вигляді XML/HTML.
+        // Якщо об'єкт не є елементом DOM, викличе console.dir().
+        console.log("Вивід console.dirxml() для DOM-елемента:");
+        const targetElement = document.getElementById('targetElement');
+        console.dirxml(targetElement); 
+
+        // ------------------------------------------------------------------
+        // 3. console.time() та console.timeEnd()
+        // ------------------------------------------------------------------
+        console.log("\n--- 3. Вимірювання часу виконання ---");
+        
+        // console.time(): Запускає таймер з унікальною міткою (Label).
+        const timerLabel = "DataProcessingLoop";
+        console.time(timerLabel); 
+
+        // Симуляція тривалої операції
+        for (let i = 0; i < 100000; i++) {
+            let temp = Math.sqrt(i);
+        }
+
+        // console.timeEnd(): Зупиняє таймер і виводить час, що минув, у мілісекундах.
+        console.timeEnd(timerLabel); 
+        
+        // ------------------------------------------------------------------
+        // 4. console.profile() та console.profileEnd()
+        // ------------------------------------------------------------------
+        console.log("\n--- 4. Профілювання CPU ---");
+        
+        // console.profile(): Починає сесію профілювання CPU (для дослідження швидкості функцій).
+        // *Примітка: У сучасних браузерах цей метод часто застарілий або вимагає ручного запуску профілювальника.*
+        // *Рекомендовано використовувати вбудовані інструменти 'Performance' (Продуктивність).*
+        
+        const profileLabel = "FunctionExecutionTime";
+        console.profile(profileLabel);
+
+        function heavyCalculation() {
+            let result = 0;
+            for (let k = 0; k < 5000; k++) {
+                result += Math.pow(Math.sin(k), 2);
+            }
+            return result;
+        }
+
+        heavyCalculation();
+
+        // console.profileEnd(): Зупиняє сесію профілювання.
+        console.profileEnd(profileLabel); 
+        console.log("Профільування завершено. Перевірте вкладку 'Performance' або 'Profiler'.");
+        
+        // ------------------------------------------------------------------
+        // 5. console.assert()
+        // ------------------------------------------------------------------
+        console.log("\n--- 5. Умовний вивід (Assertion) ---");
+        
+        // console.assert(condition, message): Виводить повідомлення про помилку ТІЛЬКИ, 
+        // якщо перший аргумент (condition) є FALSE. Якщо true, то нічого не виводиться.
+        
+        console.assert(testCondition, "ASSERTION FAILED: Умова 5 > 10 є хибною. Це повідомлення виводиться.");
+        
+        // Приклад, де умова true (повідомлення НЕ виводиться)
+        console.assert(10 > 5, "Це повідомлення не з'явиться, оскільки 10 > 5 є істиною.");
+        
+        console.log("--- КІНЕЦЬ ВИКОНАННЯ ЗАВДАННЯ 5 ---");
+    </script>
 </body>
 </html>

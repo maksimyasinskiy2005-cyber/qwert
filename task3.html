@@ -1,132 +1,133 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8">
-  <title>💎 Лабораторна робота — Завдання 3  💎</title>
-  <style>
-    /* Фон */
-    body {
-      background: radial-gradient(circle at top, #020024, #090979, #00d4ff);
-      color: #ffffff;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      text-align: center;
-      overflow: hidden;
+<meta charset="UTF-8">
+<title>Лабораторна 2, Завдання 3: Матриця та обчислення (Варіант 23)</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .matrix-table input[type="text"] {
+        width: 40px;
+        text-align: center;
+        border: 1px solid #ccc;
+        padding: 5px;
+        margin: 2px;
+    }
+    .matrix-table td {
+        padding: 0;
+    }
+    table {
+        border-collapse: collapse;
+    }
+    #main_div {
+        margin-top: 20px;
+        min-height: 100px;
+        border: 1px solid #eee;
+        padding: 5px;
+    }
+</style>
+<script>
+    let str, stb;
+
+    // Функція для побудови матриці
+    function fun() {
+        // Отримання та перетворення введених значень
+        str = parseInt(main_form.t_str.value);
+        stb = parseInt(main_form.t_stb.value);
+
+        if (isNaN(str) || isNaN(stb) || str <= 0 || stb <= 0) {
+            alert("Будь ласка, введіть коректну кількість рядків та стовпців.");
+            return;
+        }
+
+        let res_str = "<table class='matrix-table'>\n";
+        
+        // Цикли для створення рядків (i) та стовпців (j), починаючи з 1
+        for(let i = 1; i <= str; i++) {
+            res_str += "<tr>\n";
+            for(let j = 1; j <= stb; j++) {
+                // ФОРМУЛА ВАРІАНТА 23: A_ij = 11i - j
+                let value = (11 * i) - j; 
+
+                res_str += "<td>";
+                // ID елемента: _i_j, Значення: за формулою
+                res_str += "<input type=\"text\" name=\"_" + i + "_" + j + "\" value=\"" + value + "\">";
+                res_str += "</td>\n";
+            }
+            res_str += "</tr>\n";
+        }
+        res_str += "</table>";
+        
+        // Вставлення HTML-коду таблиці у div
+        main_div.innerHTML = res_str;
     }
 
-    h2 {
-      text-shadow: 0 0 15px #00ffff, 0 0 40px #00ccff;
-      font-size: 2em;
-      margin-bottom: 30px;
-      animation: glowTitle 4s ease-in-out infinite alternate;
-    }
+    // Функція для розрахунку (Варіант 23: Сума елементів третього стовпця)
+    function fun_build() {
+        // Перевірка, чи побудована матриця
+        if (!str || !stb) {
+            alert("Спочатку побудуйте матрицю!");
+            return;
+        }
 
-    @keyframes glowTitle {
-      from { text-shadow: 0 0 10px #00ffff, 0 0 25px #00ffff; }
-      to { text-shadow: 0 0 25px #00e5ff, 0 0 60px #00ffff; }
-    }
+        const TARGET_COLUMN = 3; 
+        
+        // Перевірка, чи існує третій стовпець
+        if (stb < TARGET_COLUMN) {
+            alert("Матриця має лише " + stb + " стовпців. Для розрахунку суми 3-го стовпця потрібно щонайменше 3 стовпці.");
+            return;
+        }
 
-    /* Контейнер */
-    .box {
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 20px;
-      padding: 40px 60px;
-      box-shadow: 0 0 25px #00ffff, inset 0 0 30px #00ffff;
-      backdrop-filter: blur(8px);
-      animation: boxPulse 3s ease-in-out infinite alternate;
-    }
+        let sum = 0;
+        let str_report = "";
 
-    @keyframes boxPulse {
-      from { box-shadow: 0 0 20px #00ffff, inset 0 0 20px #00ffff; }
-      to { box-shadow: 0 0 40px #00e0ff, inset 0 0 40px #00e0ff; }
-    }
+        // Цикл лише по рядках, j фіксоване = 3
+        for(let i = 1; i <= str; i++) {
+            // Отримання елемента 3-го стовпця (j = 3)
+            // Використовуємо name="_i_j" для доступу через форму, як у прикладі
+            let element_name = "_" + i + "_" + TARGET_COLUMN;
+            
+            // Зчитуємо значення і перетворюємо його на число
+            // Використовуємо document.getElementsByName бо eval() у сучасному JS не рекомендується 
+            let input_element = document.getElementsByName(element_name)[0];
 
-    label {
-      display: block;
-      font-size: 1.1em;
-      color: #b0ffff;
-      margin-top: 20px;
-      margin-bottom: 8px;
-      text-shadow: 0 0 8px #00ffff;
+            if (input_element) {
+                let value = parseInt(input_element.value);
+                if (!isNaN(value)) {
+                    sum += value;
+                }
+            } else {
+                 // Цей блок не повинен виконуватися, якщо матриця побудована коректно
+                 console.error("Елемент " + element_name + " не знайдено.");
+            }
+        }
+        
+        str_report = "Сума елементів " + TARGET_COLUMN + "-го стовпця = " + sum + ";\n";
+        
+        alert(str_report);
     }
-
-    input[type="text"] {
-      width: 300px;
-      padding: 10px;
-      border: 2px solid #00ffff;
-      border-radius: 10px;
-      background: rgba(10, 10, 30, 0.8);
-      color: #00ffff;
-      font-size: 1em;
-      text-align: center;
-      box-shadow: 0 0 10px #00ffff;
-      transition: 0.3s ease;
-    }
-
-    input[type="text"]:focus {
-      outline: none;
-      box-shadow: 0 0 25px #00ffff, 0 0 50px #00ffff;
-      transform: scale(1.05);
-    }
-
-    input[readonly] {
-      background: rgba(0, 255, 255, 0.1);
-      color: #fff;
-      box-shadow: 0 0 15px #00e0ff inset;
-      font-weight: bold;
-    }
-
-    /* Ефект текстового результату */
-    #output {
-      transition: all 0.4s ease;
-    }
-
-    /* Футуристичний підпис */
-    footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 0.9em;
-      color: #b0ffff;
-      opacity: 0.7;
-      text-shadow: 0 0 8px #00ffff;
-    }
-  </style>
+</script>
 </head>
 <body>
-  <div class="box">
-    <h2>💠 Робота з подіями onChange та onSelect 💠</h2>
-
-    <label>Перше текстове поле:</label>
-    <input type="text" id="input1" placeholder="Введіть текст...">
-
-    <label>Друге текстове поле (результат):</label>
-    <input type="text" id="output" readonly>
-  </div>
-
-  <footer>© Ясінський Максим — Лабораторна 3,  💎</footer>
-
-  <script>
-    const input1 = document.getElementById("input1");
-    const output = document.getElementById("output");
-
-    // Подія зміни тексту
-    input1.onchange = function() {
-      output.style.color = "#00ffcc";
-      output.style.textShadow = "0 0 15px #00ffff, 0 0 30px #00ffff";
-      output.value = "💡 onChange: Ви змінили текст на → " + input1.value;
-    };
-
-    // Подія виділення тексту
-    input1.onselect = function() {
-      output.style.color = "#ff80ff";
-      output.style.textShadow = "0 0 15px #ff00ff, 0 0 30px #ff00ff";
-      output.value = "✨ onSelect: Ви виділили частину тексту!";
-    };
-  </script>
+    <form id="main_form">
+        <table>
+            <tr>
+                <td>Кількість рядків</td>
+                <td><input type="text" id="t_str" value="5"></td>
+            </tr>
+            <tr>
+                <td>Кількість стовпців</td>
+                <td><input type="text" id="t_stb" value="5"></td>
+            </tr>
+            <tr>
+                <td><input type="button" onClick="fun();" value="Побудувати матрицю"></td>
+            </tr>
+            <tr>
+                <td><input type="button" onClick="fun_build();" value="Розрахувати"></td>
+            </tr>
+        </table>
+        
+        <br>
+        <div id="main_div"></div>
+    </form>
 </body>
 </html>
